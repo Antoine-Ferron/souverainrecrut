@@ -1,0 +1,781 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.2"
+  },
+  "ReportID": "01a1c229-615c-75b8-b7b2-c123ca9e7cd7",
+  "CreatedAt": "2026-11-09T21:14:14.236375976Z",
+  "ArtifactID": "sha256:b1b84d946d752eed098dc77dede3df5a7a08af5597ffc0171352b1ea2b93f36f",
+  "ArtifactName": "backend-image.tar",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 487075840,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.24.4"
+    },
+    "ImageID": "sha256:35bc158150d0aef25b975b52a9bcdb1995ee839375f529a7ed08c6ded85fa0d9",
+    "DiffIDs": [
+      "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064",
+      "sha256:71bd3a5dcf979e297883c67d3bf0325e5a59041dcedaa2d0bf324e561412e174",
+      "sha256:837230a36a0765821c2413275e54c7fbf2d9c6e8e29ab9b0d3f01b6ad9024345",
+      "sha256:c0b32f8d02c19b4e7281340ebffd727d84fa64ec829411b4722c1a295532762c",
+      "sha256:a1d8582481275f7a9f6a00ce5962b58e41f58fd0a4fbefd1ae0915bc6d5fed6f",
+      "sha256:2324fe9ce92f5d40656759a81a0c944e49cbe087904b65f54704b8d5f46d7a09",
+      "sha256:4a6aff594f408c4265aad5f56a56a7a84ec2dfb5e51114882db7b01a9f6a4ea4",
+      "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87",
+      "sha256:1692cf7819f536ad7ed6d6d235e57382721ee6778ca3e509b1f5e79270c45180",
+      "sha256:717a89819f4ff2455b8754a950b6298a8d598c7d7c1c684804d7a68389b5822f",
+      "sha256:9f5c18a0c2d8e76fadce01675ecce979a4fb66ebcecb78e16068808fe399e195"
+    ],
+    "RepoTags": [
+      "brextiar/souverainrecrut-backend:git-34debcddf6b39f8b5e5d3466300f718ab7ba3d5f"
+    ],
+    "Reference": "brextiar/souverainrecrut-backend:git-34debcddf6b39f8b5e5d3466300f718ab7ba3d5f",
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2026-11-09T21:14:03.470318095Z",
+      "history": [
+        {
+          "created": "2026-11-05T18:00:28.583714131Z",
+          "created_by": "ADD alpine-minirootfs-3.24.4-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T18:00:28.583714131Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:25:23.853937401Z",
+          "created_by": "ENV NODE_VERSION=22.23.4",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:25:23.853937401Z",
+          "created_by": "RUN /bin/sh -c addgroup -g 1000 node     \u0026\u0026 adduser -u 1000 -G node -s /bin/sh -D node     \u0026\u0026 apk add --no-cache         libatomic         libstdc++     \u0026\u0026 apk add --no-cache --virtual .build-deps         gnupg         curl     \u0026\u0026 ARCH= OPENSSL_ARCH='linux*' \u0026\u0026 alpineArch=\"$(apk --print-arch)\"       \u0026\u0026 case \"${alpineArch##*-}\" in         x86_64) ARCH='x64' OPENSSL_ARCH=linux-x86_64;;         aarch64) OPENSSL_ARCH=linux-aarch64;;         arm*) OPENSSL_ARCH=linux-armv4;;         s390x) OPENSSL_ARCH=linux-s390x;;         *) echo \"unsupported architecture\"; exit 1 ;;       esac     \u0026\u0026 export GNUPGHOME=\"$(mktemp -d)\"     \u0026\u0026 set -ex     \u0026\u0026 for key in       5BE8A3F6C8A5C01D106C0AD820B1A390B168D356       DD792F5973C6DE52C432CBDAC77ABFA00DDBF2B7       CC68F5A3106FF448322E48ED27F5E38D5B0A215F       890C08DB8579162FEE0DF9DB8BEAB4DFCF555EF4       C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C       108F52B48DB57BB0CC439B2997B01419BD92F80A       655F3B5C1FB3FA8D1A0CA6BDE4A7D232B936D2FD       A363A499291CBBC940DD62E41F10027AF002F8B0     ; do         { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" \u0026\u0026 gpg --batch --fingerprint \"$key\"; } ||         { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" \u0026\u0026 gpg --batch --fingerprint \"$key\"; } ;     done   \u0026\u0026 if [ \"$ARCH\" = \"x64\" ]; then     curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz\"     \u0026\u0026 curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc\"     \u0026\u0026 gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc     \u0026\u0026 gpgconf --kill all     \u0026\u0026 rm -rf \"$GNUPGHOME\"     \u0026\u0026 grep \" node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz\\$\" SHASUMS256.txt | sha256sum -c -     \u0026\u0026 tar -xJf \"node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz\" -C /usr/local --strip-components=1 --no-same-owner     \u0026\u0026 rm \"node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz\" SHASUMS256.txt.asc SHASUMS256.txt     \u0026\u0026 ln -s /usr/local/bin/node /usr/local/bin/nodejs;   else     echo \"Building from source\"     \u0026\u0026 apk add --no-cache --virtual .build-deps-full         binutils-gold         g++         gcc         libgcc         linux-headers         make         python3         py-setuptools     \u0026\u0026 curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION.tar.xz\"     \u0026\u0026 curl -fsSLO --compressed \"https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc\"     \u0026\u0026 gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc     \u0026\u0026 gpgconf --kill all     \u0026\u0026 rm -rf \"$GNUPGHOME\"     \u0026\u0026 grep \" node-v$NODE_VERSION.tar.xz\\$\" SHASUMS256.txt | sha256sum -c -     \u0026\u0026 tar -xf \"node-v$NODE_VERSION.tar.xz\"     \u0026\u0026 cd \"node-v$NODE_VERSION\"     \u0026\u0026 ./configure     \u0026\u0026 make -j$(getconf _NPROCESSORS_ONLN) V=     \u0026\u0026 make install     \u0026\u0026 apk del .build-deps-full     \u0026\u0026 cd ..     \u0026\u0026 rm -Rf \"node-v$NODE_VERSION\"     \u0026\u0026 rm \"node-v$NODE_VERSION.tar.xz\" SHASUMS256.txt.asc SHASUMS256.txt;   fi   \u0026\u0026 find /usr/local/include/node/openssl/archs -mindepth 1 -maxdepth 1 ! -name \"$OPENSSL_ARCH\" -exec rm -rf {} \\;   \u0026\u0026 apk del .build-deps   \u0026\u0026 node --version   \u0026\u0026 npm --version   \u0026\u0026 rm -rf /tmp/* # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:25:23.853937401Z",
+          "created_by": "ENV YARN_VERSION=1.22.22",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:25:28.182566504Z",
+          "created_by": "RUN /bin/sh -c apk add --no-cache --virtual .build-deps-yarn curl gnupg tar   \u0026\u0026 export GNUPGHOME=\"$(mktemp -d)\"   \u0026\u0026 for key in     6A010C5166006599AA17F08146C2130DFD2497F5   ; do     { gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys \"$key\" \u0026\u0026 gpg --batch --fingerprint \"$key\"; } ||     { gpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\" \u0026\u0026 gpg --batch --fingerprint \"$key\"; } ;   done   \u0026\u0026 curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz\"   \u0026\u0026 curl -fsSLO --compressed \"https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc\"   \u0026\u0026 gpg --batch --verify yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   \u0026\u0026 gpgconf --kill all   \u0026\u0026 rm -rf \"$GNUPGHOME\"   \u0026\u0026 mkdir -p /opt   \u0026\u0026 tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/   \u0026\u0026 ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn   \u0026\u0026 ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg   \u0026\u0026 rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz   \u0026\u0026 apk del .build-deps-yarn   \u0026\u0026 yarn --version   \u0026\u0026 rm -rf /tmp/* # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:25:28.200769142Z",
+          "created_by": "COPY docker-entrypoint.sh /usr/local/bin/ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:25:28.200769142Z",
+          "created_by": "ENTRYPOINT [\"docker-entrypoint.sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:25:28.200769142Z",
+          "created_by": "CMD [\"node\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-09T21:13:24.440273312Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:13:38.685490213Z",
+          "created_by": "ENV NODE_ENV=production PORT=4000",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-09T21:13:38.685490213Z",
+          "created_by": "RUN /bin/sh -c npm install --global --ignore-scripts --no-audit --no-fund npm@11.21.2 # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:02.817487666Z",
+          "created_by": "COPY /app/dist ./dist # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:03.394413807Z",
+          "created_by": "COPY /app/node_modules ./node_modules # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:03.440552675Z",
+          "created_by": "COPY package.json prisma.config.ts ./ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:03.455411001Z",
+          "created_by": "COPY prisma/schema.prisma prisma/schema.prisma # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:03.470318095Z",
+          "created_by": "COPY prisma/migrations prisma/migrations # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-09T21:14:03.470318095Z",
+          "created_by": "USER node",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-09T21:14:03.470318095Z",
+          "created_by": "EXPOSE [4000/tcp]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-09T21:14:03.470318095Z",
+          "created_by": "CMD [\"node\" \"dist/server.js\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064",
+          "sha256:71bd3a5dcf979e297883c67d3bf0325e5a59041dcedaa2d0bf324e561412e174",
+          "sha256:837230a36a0765821c2413275e54c7fbf2d9c6e8e29ab9b0d3f01b6ad9024345",
+          "sha256:c0b32f8d02c19b4e7281340ebffd727d84fa64ec829411b4722c1a295532762c",
+          "sha256:a1d8582481275f7a9f6a00ce5962b58e41f58fd0a4fbefd1ae0915bc6d5fed6f",
+          "sha256:2324fe9ce92f5d40656759a81a0c944e49cbe087904b65f54704b8d5f46d7a09",
+          "sha256:4a6aff594f408c4265aad5f56a56a7a84ec2dfb5e51114882db7b01a9f6a4ea4",
+          "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87",
+          "sha256:1692cf7819f536ad7ed6d6d235e57382721ee6778ca3e509b1f5e79270c45180",
+          "sha256:717a89819f4ff2455b8754a950b6298a8d598c7d7c1c684804d7a68389b5822f",
+          "sha256:9f5c18a0c2d8e76fadce01675ecce979a4fb66ebcecb78e16068808fe399e195"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "node",
+          "dist/server.js"
+        ],
+        "Entrypoint": [
+          "docker-entrypoint.sh"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "NODE_VERSION=22.23.4",
+          "YARN_VERSION=1.22.22",
+          "NODE_ENV=production",
+          "PORT=4000"
+        ],
+        "Labels": {
+          "org.opencontainers.image.revision": "34debcddf6b39f8b5e5d3466300f718ab7ba3d5f",
+          "org.opencontainers.image.source": "https://github.com/Antoine-Ferron/souverainrecrut"
+        },
+        "User": "node",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "4000/tcp": {}
+        },
+        "ArgsEscaped": true
+      }
+    },
+    "Layers": [
+      {
+        "Size": 8713728,
+        "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+        "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+      },
+      {
+        "Size": 156692992,
+        "Digest": "sha256:2a9491572f6e8f9c3be47a2d17b7dcd30f264003f2cbeedf9359544b3ca5396c",
+        "DiffID": "sha256:71bd3a5dcf979e297883c67d3bf0325e5a59041dcedaa2d0bf324e561412e174"
+      },
+      {
+        "Size": 5391360,
+        "Digest": "sha256:df11f9b3da94f640e357ccc86df09a574dc04df1ad95e012f511f4a02b566cd3",
+        "DiffID": "sha256:837230a36a0765821c2413275e54c7fbf2d9c6e8e29ab9b0d3f01b6ad9024345"
+      },
+      {
+        "Size": 3584,
+        "Digest": "sha256:071409a402546fea9e56af710d951a9e0c9bb205e4b1186811677d2c9dcad115",
+        "DiffID": "sha256:c0b32f8d02c19b4e7281340ebffd727d84fa64ec829411b4722c1a295532762c"
+      },
+      {
+        "Size": 1536,
+        "Digest": "sha256:110121c73ca18c731fa065f2f99dd7a21d878a6cb5266bb5ff0ea07a9123a461",
+        "DiffID": "sha256:a1d8582481275f7a9f6a00ce5962b58e41f58fd0a4fbefd1ae0915bc6d5fed6f"
+      },
+      {
+        "Size": 15926784,
+        "Digest": "sha256:f72a3282dfa840870e61e51d97f2a2ebbdce80b13151aefd2cca527584e2285c",
+        "DiffID": "sha256:2324fe9ce92f5d40656759a81a0c944e49cbe087904b65f54704b8d5f46d7a09"
+      },
+      {
+        "Size": 268288,
+        "Digest": "sha256:38e10e8b21754a72ca8ab517a27a7992b4ab316751231772a205071bfd135cc3",
+        "DiffID": "sha256:4a6aff594f408c4265aad5f56a56a7a84ec2dfb5e51114882db7b01a9f6a4ea4"
+      },
+      {
+        "Size": 300059648,
+        "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+        "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+      },
+      {
+        "Size": 5632,
+        "Digest": "sha256:e2b33b768fae011d79209d5c45a026cd60eb75584387508153c7d305c8a8ca74",
+        "DiffID": "sha256:1692cf7819f536ad7ed6d6d235e57382721ee6778ca3e509b1f5e79270c45180"
+      },
+      {
+        "Size": 5120,
+        "Digest": "sha256:28a5d5e45639c33587585c480c14997c8eb091f5177b4b846ef341cafbad5a0b",
+        "DiffID": "sha256:717a89819f4ff2455b8754a950b6298a8d598c7d7c1c684804d7a68389b5822f"
+      },
+      {
+        "Size": 7168,
+        "Digest": "sha256:cfc8597599337d47e26b3d7d50694eb555a4b08c30c6f1c63c183b9d6bc0de33",
+        "DiffID": "sha256:9f5c18a0c2d8e76fadce01675ecce979a4fb66ebcecb78e16068808fe399e195"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "backend-image.tar (alpine 3.24.4)",
+      "Class": "os-pkgs",
+      "Type": "alpine",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-4738",
+          "PkgID": "zlib@1.3.2-r1",
+          "PkgName": "zlib",
+          "PkgIdentifier": {
+            "PURL": "pkg:apk/alpine/zlib@1.3.2-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "926381dc853769fb"
+          },
+          "InstalledVersion": "1.3.2-r1",
+          "FixedVersion": "1.4-r0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-4738",
+          "DataSource": {
+            "ID": "alpine",
+            "Name": "Alpine Secdb",
+            "URL": "https://secdb.alpinelinux.org/"
+          },
+          "Fingerprint": "sha256:84879465a9da458d886621d43f8b1ce467c2884e5b63608d1d7adec0c229d3d5",
+          "Title": "Improper Restriction of Operations within the Bounds of a Memory Buffe ...",
+          "Description": "Improper Restriction of Operations within the Bounds of a Memory Buffer vulnerability in OSGeo gdal (frmts/zlib/contrib/infback9 modules). This vulnerability is associated with program files inftree9.C‎.\n\nThis issue affects gdal: before 3.11.0.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-119"
+          ],
+          "VendorSeverity": {
+            "bitnami": 4,
+            "julia": 4,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "bitnami": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:A/S:P/AU:Y/R:U/V:C/RE:L/U:Amber",
+              "V40Score": 9.4
+            },
+            "julia": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:A/S:P/AU:Y/R:U/V:C/RE:L/U:Amber",
+              "V40Score": 9.4
+            }
+          },
+          "References": [
+            "https://github.com/OSGeo/gdal/pull/12244",
+            "https://github.com/advisories/GHSA-hp6p-5qh5-w9fj",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-4738",
+            "https://www.cve.org/CVERecord?id=CVE-2026-4738"
+          ],
+          "PublishedDate": "2026-03-24T04:17:29Z",
+          "LastModifiedDate": "2026-06-17T10:57:09.03Z"
+        }
+      ]
+    },
+    {
+      "Target": "Node.js",
+      "Class": "lang-pkgs",
+      "Type": "node-pkg",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-40345",
+          "VendorIDs": [
+            "GHSA-ggr8-5vv4-36mx"
+          ],
+          "PkgID": "deepmerge-ts@7.1.5",
+          "PkgName": "deepmerge-ts",
+          "PkgPath": "app/node_modules/deepmerge-ts/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/deepmerge-ts@7.1.5",
+            "UID": "d0a8ddd259000c06"
+          },
+          "InstalledVersion": "7.1.5",
+          "FixedVersion": "8.0.0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-40345",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:e4f977ee475c15214dda3467049fae01032d013caebe7d579489b93d62cb30b1",
+          "Title": "DeepmergeTS has stack exhaustion when merging recursive object graphs",
+          "Description": "deepmerge-ts is a typescript library providing functionality to deep merging of javascript objects. Prior to 8.0.0, the deepmerge, deepmergeCustom, deepmergeInto, and deepmergeIntoCustom APIs do not track visited objects or object pairs when recursively merging records. When two input values contain self-references at the same property path, the merge logic repeatedly revisits the same pair until Node.js raises RangeError: Maximum call stack size exceeded. Applications that merge attacker-controlled recursive object graphs can synchronously crash the affected process or cause repeated worker restarts. Plain JSON input alone cannot create the recursive graph required to trigger the issue. This issue is fixed in version 8.0.0.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-674"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V40Score": 8.2
+            }
+          },
+          "References": [
+            "https://github.com/RebeccaStevens/deepmerge-ts",
+            "https://github.com/RebeccaStevens/deepmerge-ts/commit/398492757b3f22a0d7d89b09ce1ae9cd32806c9a",
+            "https://github.com/RebeccaStevens/deepmerge-ts/pull/707",
+            "https://github.com/RebeccaStevens/deepmerge-ts/releases/tag/v8.0.0",
+            "https://github.com/RebeccaStevens/deepmerge-ts/security/advisories/GHSA-ggr8-5vv4-36mx"
+          ],
+          "PublishedDate": "2026-08-20T17:17:29.783Z",
+          "LastModifiedDate": "2026-10-18T20:10:00.11Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-32887",
+          "VendorIDs": [
+            "GHSA-38f7-945m-qr2g"
+          ],
+          "PkgID": "effect@3.16.12",
+          "PkgName": "effect",
+          "PkgPath": "app/node_modules/effect/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/effect@3.16.12",
+            "UID": "1bdb4587c4b09e11"
+          },
+          "InstalledVersion": "3.16.12",
+          "FixedVersion": "3.20.0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-32887",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:27041dd47c3ef1653265189bf07047296c37d17d494ca51f824ab54769adf0fe",
+          "Title": "Effect `AsyncLocalStorage` context lost/contaminated inside Effect fibers under concurrent load with RPC",
+          "Description": "Effect is a TypeScript framework that consists of several packages that work together to help build TypeScript applications. Prior to version 3.20.0, when using `RpcServer.toWebHandler` (or `HttpApp.toWebHandlerRuntime`) inside a Next.js App Router route handler, any Node.js `AsyncLocalStorage`-dependent API called from within an Effect fiber can read another concurrent request's context — or no context at all. Under production traffic, `auth()` from `@clerk/nextjs/server` returns a different user's session. Version 3.20.0 contains a fix for the issue.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-362"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+              "V3Score": 7.4
+            }
+          },
+          "References": [
+            "https://github.com/Effect-TS/effect",
+            "https://github.com/Effect-TS/effect/security/advisories/GHSA-38f7-945m-qr2g",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-32887"
+          ],
+          "PublishedDate": "2026-03-20T22:16:27.98Z",
+          "LastModifiedDate": "2026-06-17T10:36:30.77Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118773",
+          "VendorIDs": [
+            "GHSA-3g3m-2fjr-6pw4"
+          ],
+          "PkgID": "glob@11.1.0",
+          "PkgName": "glob",
+          "PkgPath": "app/node_modules/swagger-jsdoc/node_modules/glob/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/glob@11.1.0",
+            "UID": "d408d0d61affd750"
+          },
+          "InstalledVersion": "11.1.0",
+          "FixedVersion": "14.0.2",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-118773",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:dbf18a6db086ba0fdba1723a9ce9ea83cbccfc2169ac0e491f1f42a76b2c6cb7",
+          "Title": "glob: glob: Denial of Service (DoS) via incomplete traversal cancellation",
+          "Description": "Glob matches files using patterns the shell uses. From 9.0.0 until 14.0.2, abort branches in src/walker.ts, including GlobUtil.walkCB(), GlobUtil.walkCB2(), GlobUtil.walkCBSync(), and GlobUtil.walkCB2Sync(), invoke the callbacks without returning. After AbortSignal or AbortSignal.timeout() rejects or emits an error, execution can continue into processor.processPatterns(), readdirCB(), and recursive traversal. The issue affects glob() and globStream() when applications expose attacker-influenced patterns or directory trees and rely on cancellation as a traversal budget. Repeated timed-out requests can stack background filesystem operations and CPU work, degrading worker throughput or service availability; no confidentiality or integrity impact was observed. This issue is fixed in 14.0.2.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-400"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+              "V40Score": 6.3
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "V3Score": 5.3
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-118773",
+            "https://github.com/isaacs/node-glob",
+            "https://github.com/isaacs/node-glob/commit/4682e8c9babee1b385202ede36389634e12076d7",
+            "https://github.com/isaacs/node-glob/releases/tag/v14.0.2",
+            "https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-118773",
+            "https://www.cve.org/CVERecord?id=CVE-2026-118773"
+          ],
+          "PublishedDate": "2026-10-29T19:17:19.72Z",
+          "LastModifiedDate": "2026-10-30T19:37:07.073Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118773",
+          "VendorIDs": [
+            "GHSA-3g3m-2fjr-6pw4"
+          ],
+          "PkgID": "glob@13.0.6",
+          "PkgName": "glob",
+          "PkgPath": "usr/local/lib/node_modules/npm/node_modules/glob/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/glob@13.0.6",
+            "UID": "172563f1159147e8"
+          },
+          "InstalledVersion": "13.0.6",
+          "FixedVersion": "14.0.2",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:f72a3282dfa840870e61e51d97f2a2ebbdce80b13151aefd2cca527584e2285c",
+            "DiffID": "sha256:2324fe9ce92f5d40656759a81a0c944e49cbe087904b65f54704b8d5f46d7a09"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-118773",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:58b9c2a703dca0c511a28e3e494ab0dd04bab9ec52e442dfcde089acfc9b5bf3",
+          "Title": "glob: glob: Denial of Service (DoS) via incomplete traversal cancellation",
+          "Description": "Glob matches files using patterns the shell uses. From 9.0.0 until 14.0.2, abort branches in src/walker.ts, including GlobUtil.walkCB(), GlobUtil.walkCB2(), GlobUtil.walkCBSync(), and GlobUtil.walkCB2Sync(), invoke the callbacks without returning. After AbortSignal or AbortSignal.timeout() rejects or emits an error, execution can continue into processor.processPatterns(), readdirCB(), and recursive traversal. The issue affects glob() and globStream() when applications expose attacker-influenced patterns or directory trees and rely on cancellation as a traversal budget. Repeated timed-out requests can stack background filesystem operations and CPU work, degrading worker throughput or service availability; no confidentiality or integrity impact was observed. This issue is fixed in 14.0.2.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-400"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+              "V40Score": 6.3
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "V3Score": 5.3
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-118773",
+            "https://github.com/isaacs/node-glob",
+            "https://github.com/isaacs/node-glob/commit/4682e8c9babee1b385202ede36389634e12076d7",
+            "https://github.com/isaacs/node-glob/releases/tag/v14.0.2",
+            "https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-118773",
+            "https://www.cve.org/CVERecord?id=CVE-2026-118773"
+          ],
+          "PublishedDate": "2026-10-29T19:17:19.72Z",
+          "LastModifiedDate": "2026-10-30T19:37:07.073Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118764",
+          "VendorIDs": [
+            "GHSA-g3hv-75wg-m249"
+          ],
+          "PkgID": "minimatch@10.2.5",
+          "PkgName": "minimatch",
+          "PkgPath": "app/node_modules/swagger-jsdoc/node_modules/minimatch/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/minimatch@10.2.5",
+            "UID": "76611f4d6133f903"
+          },
+          "InstalledVersion": "10.2.5",
+          "FixedVersion": "11.0.1",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-118764",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:805e9a2c176eb2ad68b6404b0745402651e724df643f511ed1cba760998ff242",
+          "Title": "minimatch: minimatch: Denial of Service via crafted glob pattern expansion",
+          "Description": "minimatch is a minimal matching utility for converting glob expressions into JavaScript RegExp objects. Starting in 7.0.0 and prior to 11.0.1, src/index.ts implements firstPhasePreProcess() so that, at optimizationLevel 2 or higher, it repeatedly expands attacker-controlled **/.. pattern segments inside a fixpoint loop, allowing generated globParts entries to be processed and expanded again. secondPhasePreProcess() then compares the expanded entries pairwise, so a short malicious glob can cause excessive CPU and memory consumption during pattern compilation. This issue is fixed in version 11.0.1.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-405"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+              "V40Score": 6.9
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.9
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-118764",
+            "https://github.com/isaacs/minimatch",
+            "https://github.com/isaacs/minimatch/commit/297b6c1a01f2410b3ba1ebed14ba222d0c3c1033",
+            "https://github.com/isaacs/minimatch/commit/77a0f5c4b80bdc641c3c930a1d9edf5ad2db57f8",
+            "https://github.com/isaacs/minimatch/commit/fd0b3ab9cbc5bf1aff1c99f1f46e413c2b3340da",
+            "https://github.com/isaacs/minimatch/releases/tag/v11.0.1",
+            "https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-118764",
+            "https://www.cve.org/CVERecord?id=CVE-2026-118764"
+          ],
+          "PublishedDate": "2026-10-29T17:18:07.38Z",
+          "LastModifiedDate": "2026-11-03T17:17:59.437Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-118764",
+          "VendorIDs": [
+            "GHSA-g3hv-75wg-m249"
+          ],
+          "PkgID": "minimatch@10.2.5",
+          "PkgName": "minimatch",
+          "PkgPath": "usr/local/lib/node_modules/npm/node_modules/minimatch/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/minimatch@10.2.5",
+            "UID": "864a32484f674d54"
+          },
+          "InstalledVersion": "10.2.5",
+          "FixedVersion": "11.0.1",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:f72a3282dfa840870e61e51d97f2a2ebbdce80b13151aefd2cca527584e2285c",
+            "DiffID": "sha256:2324fe9ce92f5d40656759a81a0c944e49cbe087904b65f54704b8d5f46d7a09"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-118764",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:805e9a2c176eb2ad68b6404b0745402651e724df643f511ed1cba760998ff242",
+          "Title": "minimatch: minimatch: Denial of Service via crafted glob pattern expansion",
+          "Description": "minimatch is a minimal matching utility for converting glob expressions into JavaScript RegExp objects. Starting in 7.0.0 and prior to 11.0.1, src/index.ts implements firstPhasePreProcess() so that, at optimizationLevel 2 or higher, it repeatedly expands attacker-controlled **/.. pattern segments inside a fixpoint loop, allowing generated globParts entries to be processed and expanded again. secondPhasePreProcess() then compares the expanded entries pairwise, so a short malicious glob can cause excessive CPU and memory consumption during pattern compilation. This issue is fixed in version 11.0.1.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-405"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+              "V40Score": 6.9
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.9
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-118764",
+            "https://github.com/isaacs/minimatch",
+            "https://github.com/isaacs/minimatch/commit/297b6c1a01f2410b3ba1ebed14ba222d0c3c1033",
+            "https://github.com/isaacs/minimatch/commit/77a0f5c4b80bdc641c3c930a1d9edf5ad2db57f8",
+            "https://github.com/isaacs/minimatch/commit/fd0b3ab9cbc5bf1aff1c99f1f46e413c2b3340da",
+            "https://github.com/isaacs/minimatch/releases/tag/v11.0.1",
+            "https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-118764",
+            "https://www.cve.org/CVERecord?id=CVE-2026-118764"
+          ],
+          "PublishedDate": "2026-10-29T17:18:07.38Z",
+          "LastModifiedDate": "2026-11-03T17:17:59.437Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-15603",
+          "VendorIDs": [
+            "GHSA-jxfw-x594-9x9m"
+          ],
+          "PkgID": "morgan@1.11.0",
+          "PkgName": "morgan",
+          "PkgPath": "app/node_modules/morgan/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/morgan@1.11.0",
+            "UID": "ee1bc1e2a33e8b28"
+          },
+          "InstalledVersion": "1.11.0",
+          "FixedVersion": "1.12.0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15603",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:cbe377bba257b78c79ec2b262078dbccaea4570deed4a34ed7b57ddd702227ac",
+          "Title": "morgan: morgan: Log Forging via unescaped Unicode line separators",
+          "Description": "morgan is an HTTP request logger middleware for Node.js. In versions prior to 1.12.0, the internal helper that escapes log token values did not neutralize the Unicode line separator characters U+0085 (Next Line), U+2028 (Line Separator), and U+2029 (Paragraph Separator). An unauthenticated remote client can place these characters in an attacker-controlled log token, for example a Basic auth username surfaced through the remote-user token, so that Unicode-aware downstream log processing splits a single request log into multiple logical records. This is a log forging issue (CWE-117) and an incomplete-fix follow-up to CVE-2026-5078, which only addressed ASCII control characters. The issue is fixed in morgan 1.12.0, which extends the escaping set to cover these Unicode line separators. Upgrade to morgan 1.12.0 to remediate.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-117"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "V3Score": 5.3
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "V3Score": 5.3
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-15603",
+            "https://cna.openjsf.org/security-advisories.html",
+            "https://github.com/expressjs/morgan",
+            "https://github.com/expressjs/morgan/commit/fbf93833186920cc39bb19b247e4a86b61bef4fe",
+            "https://github.com/expressjs/morgan/releases/tag/1.12.0",
+            "https://github.com/expressjs/morgan/security/advisories/GHSA-jxfw-x594-9x9m",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-15603",
+            "https://www.cve.org/CVERecord?id=CVE-2026-15603"
+          ],
+          "PublishedDate": "2026-08-28T16:17:07.417Z",
+          "LastModifiedDate": "2026-08-31T17:11:12.057Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-87859",
+          "VendorIDs": [
+            "GHSA-9f6g-j8ch-79g4"
+          ],
+          "PkgID": "morgan@1.11.0",
+          "PkgName": "morgan",
+          "PkgPath": "app/node_modules/morgan/package.json",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/morgan@1.11.0",
+            "UID": "ee1bc1e2a33e8b28"
+          },
+          "InstalledVersion": "1.11.0",
+          "FixedVersion": "1.12.1",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:a006bae608e920b11221868252970b1893fac043e1f93e6ccc6b6c228a2a2bf5",
+            "DiffID": "sha256:045e265907bc151e2490b7faf6b94ad6cd874625a77f67a06f8ada35a4fa6d87"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-87859",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:6761f1195ed1ba921cf247e5c969aac44ad9a994bd18010e8a7acad99f6c5204",
+          "Title": "morgan: morgan: Log Injection via unescaped double quote in log fields",
+          "Description": "morgan is an HTTP request logger middleware for Node.js. In versions before 1.12.1, its escapeLogField() function does not escape the double quote character, which delimits the quoted fields of the Apache combined log format that morgan emits. An unauthenticated remote attacker who controls a value written to a quoted field, such as the User-Agent or Referer header, can include a double quote to close that field early, so a log consumer that parses the log by field position reads attacker-supplied text as the following field. In the built-in formats this makes the recorded value differ from the value that was sent, and in custom formats that quote an attacker-controlled token before a server-controlled one it can forge values such as the response status. No newline is injected, so record separation stays intact. The issue is fixed in morgan 1.12.1, which escapes the double quote. Users should upgrade to morgan 1.12.1 or later.",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-117"
+          ],
+          "VendorSeverity": {
+            "ghsa": 2,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "V3Score": 5.3
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+              "V3Score": 5.3
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-87859",
+            "https://cna.openjsf.org/security-advisories.html",
+            "https://github.com/expressjs/morgan",
+            "https://github.com/expressjs/morgan/commit/4b695edf967ce179cdf4009fe8cddd184b7511ee",
+            "https://github.com/expressjs/morgan/releases/tag/1.12.1",
+            "https://github.com/expressjs/morgan/security/advisories/GHSA-9f6g-j8ch-79g4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-87859",
+            "https://www.cve.org/CVERecord?id=CVE-2026-87859"
+          ],
+          "PublishedDate": "2026-09-11T10:16:53.253Z",
+          "LastModifiedDate": "2026-09-16T19:40:00.317Z"
+        }
+      ]
+    }
+  ]
+}

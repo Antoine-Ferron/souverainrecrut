@@ -1,0 +1,84 @@
+{
+  "revision": "34debcddf6b39f8b5e5d3466300f718ab7ba3d5f",
+  "analysisId": "3315e66f-9565-45fd-b693-0d643370e3ca",
+  "projectStatus": {
+    "status": "OK",
+    "conditions": [
+      {
+        "status": "OK",
+        "metricKey": "new_coverage",
+        "comparator": "LT",
+        "errorThreshold": "80",
+        "actualValue": "80.0"
+      },
+      {
+        "status": "OK",
+        "metricKey": "coverage",
+        "comparator": "LT",
+        "errorThreshold": "80",
+        "actualValue": "91.3"
+      },
+      {
+        "status": "OK",
+        "metricKey": "new_duplicated_lines_density",
+        "comparator": "GT",
+        "errorThreshold": "3",
+        "actualValue": "0.0"
+      },
+      {
+        "status": "OK",
+        "metricKey": "new_violations",
+        "comparator": "GT",
+        "errorThreshold": "0",
+        "actualValue": "0"
+      }
+    ],
+    "ignoredConditions": false,
+    "period": {
+      "mode": "PREVIOUS_VERSION",
+      "date": "2026-11-09T21:06:19+0000"
+    },
+    "caycStatus": "over-compliant"
+  },
+  "component": {
+    "key": "souverainrecrut-backend",
+    "name": "SouverainRecrut Backend",
+    "qualifier": "TRK",
+    "measures": [
+      {
+        "metric": "coverage",
+        "value": "91.3",
+        "bestValue": false
+      },
+      {
+        "metric": "bugs",
+        "value": "0",
+        "bestValue": true
+      },
+      {
+        "metric": "code_smells",
+        "value": "0",
+        "bestValue": true
+      },
+      {
+        "metric": "duplicated_lines_density",
+        "value": "20.7",
+        "bestValue": false
+      },
+      {
+        "metric": "ncloc",
+        "value": "2724"
+      },
+      {
+        "metric": "vulnerabilities",
+        "value": "0",
+        "bestValue": true
+      },
+      {
+        "metric": "security_hotspots",
+        "value": "0",
+        "bestValue": true
+      }
+    ]
+  }
+}

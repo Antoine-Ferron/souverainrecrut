@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testsuite name="API Backend et PostgreSQL" time="0.470585" disabled="0" errors="0" tests="10" failures="0" skipped="0" hostname="e6b0013f6a4b">
+		<testcase name="le profil authentifié correspond au recruteur et masque son mot de passe" time="0.004712" classname="test"/>
+		<testcase name="la connexion refuse un compte inconnu et un mauvais mot de passe" time="0.008307" classname="test"/>
+		<testcase name="les ressources privées refusent les visiteurs et les jetons invalides" time="0.006695" classname="test"/>
+		<testcase name="la liste des utilisateurs est réservée aux administrateurs" time="0.010908" classname="test"/>
+		<testcase name="un administrateur change le mot de passe sans l’exposer dans l’API ni le stocker en clair" time="0.280718" classname="test"/>
+		<testcase name="l’API répond et Prisma confirme la disponibilité de PostgreSQL" time="0.003252" classname="test"/>
+		<testcase name="un candidat peut être créé, relu, modifié et supprimé selon le rôle" time="0.018872" classname="test"/>
+		<testcase name="une offre est rattachée au recruteur et sa suppression exige le rôle admin" time="0.016484" classname="test"/>
+		<testcase name="la candidature relie le candidat à l’offre et conserve la décision du recruteur" time="0.034060" classname="test"/>
+		<testcase name="les données invalides sont refusées avant leur insertion" time="0.006606" classname="test"/>
+	</testsuite>
+	<!-- tests 10 -->
+	<!-- suites 1 -->
+	<!-- pass 10 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 1094.278283 -->
+</testsuites>

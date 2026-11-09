@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-09T21:17:46.1229810Z",
+  "image": "brextiar/souverainrecrut-backend@sha256:0941285f7a7d3ce6f9863e8a6ac317462663fff2b617e60c5b94f426247e7eee",
+  "commit": "34debcddf6b39f8b5e5d3466300f718ab7ba3d5f",
+  "tag": "brextiar/souverainrecrut-backend:git-34debcddf6b39f8b5e5d3466300f718ab7ba3d5f",
+  "source": "https://github.com/Antoine-Ferron/souverainrecrut",
+  "node": "v22.23.4",
+  "user": "node",
+  "database": "PostgreSQL 16",
+  "migration": "20260630124434_init",
+  "health": {
+    "httpStatus": 200,
+    "path": "/v1/health",
+    "response": {
+      "success": true,
+      "data": {
+        "status": "UP",
+        "timestamp": "2026-11-09T21:17:45.591Z",
+        "uptime": 0.329478233,
+        "environment": "production"
+      }
+    }
+  },
+  "ready": {
+    "httpStatus": 200,
+    "path": "/v1/ready",
+    "response": {
+      "success": true,
+      "data": {
+        "status": "READY",
+        "database": "CONNECTED",
+        "timestamp": "2026-11-09T21:17:45.627Z"
+      }
+    }
+  }
+}

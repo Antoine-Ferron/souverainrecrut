@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import { setTimeout } from 'node:timers/promises';
 
 const { SONAR_HOST_URL, SONAR_AUTH_TOKEN } = process.env;
 const project = 'souverainrecrut-backend';
@@ -14,8 +15,17 @@ async function query(path, params) {
   return response.json();
 }
 
-const { task } = await query('/api/ce/task', { id: taskId });
-if (!task.analysisId) throw new Error('Analyse SonarQube incomplète');
+let task;
+do {
+  ({ task } = await query('/api/ce/task', { id: taskId }));
+  if (task.status === 'SUCCESS') break;
+  if (!['PENDING', 'IN_PROGRESS'].includes(task.status)) {
+    throw new Error(`Analyse SonarQube ${taskId} : ${task.status}`);
+  }
+  await setTimeout(3000);
+} while (true);
+
+if (!task.analysisId) throw new Error('Identifiant du résultat SonarQube absent');
 const gate = await query('/api/qualitygates/project_status', { analysisId: task.analysisId });
 const metrics = await query('/api/measures/component', {
   component: project,
@@ -24,3 +34,5 @@ const metrics = await query('/api/measures/component', {
 await writeFile('run-reports/sonar.json', JSON.stringify({
   revision: process.env.REVISION, analysisId: task.analysisId, ...gate, ...metrics,
 }, null, 2) + '\n');
+console.log(`Quality Gate : ${gate.projectStatus.status}`);
+if (gate.projectStatus.status !== 'OK') process.exitCode = 1;

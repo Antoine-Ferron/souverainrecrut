@@ -1,3 +1,5 @@
 *
 !Dockerfile
 !jenkins.yaml
+!sonar-credential.groovy
+!plugins.txt

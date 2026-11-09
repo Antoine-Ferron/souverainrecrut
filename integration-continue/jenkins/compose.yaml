@@ -2,7 +2,7 @@ name: souverainrecrut-ci
 
 services:
   sonarqube:
-    image: sonarqube:26.10.0.133078-community
+    image: sonarqube:26.10.0.133078-community@sha256:f95aaa9016dd4e92c7d70691167a6d96dbb5d8acffd61eba1cb4335d364a7840
     ports:
       - "127.0.0.1:19000:9000"
     volumes:
@@ -10,7 +10,7 @@ services:
       - sonar-extensions:/opt/sonarqube/extensions
 
   docker:
-    image: docker:29-dind
+    image: docker:29-dind@sha256:08a98015fce594af7c382883bea080ea206de74402a95da9dc52b6428c8cd121
     privileged: true
     environment:
       DOCKER_TLS_CERTDIR: /certs

@@ -22,7 +22,7 @@ function Get-AdminHeader([string]$password) {
 }
 
 New-Item -ItemType Directory -Force -Path $state | Out-Null
-$null = Get-LabPassword 'jenkins_password'
+$jenkinsPassword = Get-LabPassword 'jenkins_password'
 $sonarPassword = Get-LabPassword 'sonar_password'
 docker compose -f $compose up -d sonarqube
 if ($LASTEXITCODE) { throw 'Démarrage de SonarQube impossible.' }
@@ -68,14 +68,6 @@ Invoke-RestMethod "$sonarUrl/api/qualitygates/select" -Method Post -Headers $hea
     gateName = $gate; projectKey = $projectKey
 } | Out-Null
 
-$webhook = 'http://jenkins:8080/sonarqube-webhook/'
-$hooks = Invoke-RestMethod "$sonarUrl/api/webhooks/list?project=$projectKey" -Headers $headers
-if ($webhook -notin $hooks.webhooks.url) {
-    Invoke-RestMethod "$sonarUrl/api/webhooks/create" -Method Post -Headers $headers -Body @{
-        project = $projectKey; name = 'Jenkins local'; url = $webhook
-    } | Out-Null
-}
-
 $tokenPath = Join-Path $state 'sonar_token'
 $newToken = $true
 if (Test-Path -LiteralPath $tokenPath) {
@@ -92,4 +84,14 @@ if ($newToken) {
 
 docker compose -f $compose up -d --build jenkins
 if ($LASTEXITCODE) { throw 'Démarrage de Jenkins impossible.' }
+$jenkinsHeaders = @{ Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("tp-admin:$jenkinsPassword")) }
+$timeout = (Get-Date).AddMinutes(5)
+do {
+    try {
+        $job = Invoke-RestMethod 'http://127.0.0.1:18080/job/souverainrecrut-Dev/api/json?tree=name' -Headers $jenkinsHeaders -TimeoutSec 5
+        if ($job.name -eq 'souverainrecrut-Dev') { break }
+    } catch { }
+    Start-Sleep -Seconds 3
+} while ((Get-Date) -lt $timeout)
+if ($job.name -ne 'souverainrecrut-Dev') { throw 'Job Jenkins indisponible. Vérifier docker compose logs jenkins.' }
 Write-Host 'Jenkins : http://127.0.0.1:18080/  |  SonarQube : http://127.0.0.1:19000/'

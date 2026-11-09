@@ -12,6 +12,7 @@ RUN npm run build && npm prune --omit=dev --no-audit
 
 FROM base
 ENV NODE_ENV=production PORT=4000
+RUN --mount=type=cache,target=/root/.npm npm install --global --ignore-scripts --no-audit --no-fund npm@11.21.2
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY package.json prisma.config.ts ./

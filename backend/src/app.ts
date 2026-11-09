@@ -13,6 +13,7 @@ import { notFoundMiddleware } from "./middlewares/not-found.middleware";
 import { errorMiddleware } from "./middlewares/error.middleware";
 
 const app = express();
+app.disable("x-powered-by");
 
 /**
  * ==========================================

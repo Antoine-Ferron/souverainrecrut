@@ -57,12 +57,10 @@ pipeline {
         }
         stage('Quality Gate') {
             steps {
-                script {
-                    def gate = timeout(time: 10, unit: 'MINUTES') { waitForQualityGate() }
+                timeout(time: 10, unit: 'MINUTES') {
                     withSonarQubeEnv('SonarQube') {
                         sh 'node integration-continue/sonar/rapport.mjs'
                     }
-                    if (gate.status != 'OK') { error("Quality Gate : ${gate.status}") }
                 }
             }
         }
@@ -82,6 +80,7 @@ pipeline {
                     trap 'rm -f backend-image.tar' EXIT
                     docker image save -o backend-image.tar "$IMAGE"
                     trivy image --timeout 30m --input backend-image.tar --scanners vuln --no-progress \
+                        --db-repository ghcr.io/aquasecurity/trivy-db:2 \
                         --list-all-pkgs=false --format json --output run-reports/trivy.json
                     trivy convert --format table --severity CRITICAL --exit-code 1 run-reports/trivy.json
                 '''

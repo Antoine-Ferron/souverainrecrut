@@ -10,14 +10,15 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Début du seed...");
 
+  const password = process.env.SEED_RECRUITER_PASSWORD;
+  if (!password) throw new Error("SEED_RECRUITER_PASSWORD est requis pour le seed de démonstration.");
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   // Nettoyage de la base
   await prisma.application.deleteMany();
   await prisma.job.deleteMany();
   await prisma.candidate.deleteMany();
   await prisma.user.deleteMany();
-
-  // Hachage du mot de passe
-  const hashedPassword = await bcrypt.hash("password123", 10);
 
   // Création du recruteur
   const recruiter = await prisma.user.create({

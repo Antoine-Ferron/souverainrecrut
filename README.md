@@ -1,5 +1,9 @@
 # SouverainRecrut
 
+## TP CI/CD · Jour 1
+
+Le [guide d’intégration continue](integration-continue/README.md) décrit le job Jenkins de la branche `Dev`, les tests PostgreSQL, les contrôles SonarQube et Trivy et la publication de l’image Backend.
+
 ## Présentation
 
 SouverainRecrut est une plateforme web de gestion des recrutements destinée aux entreprises.

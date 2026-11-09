@@ -28,7 +28,7 @@ export class UserRepository {
   /**
    * Retourne un utilisateur par son identifiant.
    */
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string) {
     return prisma.user.findUnique({
       where: {
         id,
@@ -41,6 +41,7 @@ export class UserRepository {
    */
   async findByEmail(email: string): Promise<User | null> {
     return prisma.user.findUnique({
+      omit: { password: false },
       where: {
         email,
       },
@@ -71,7 +72,7 @@ export class UserRepository {
   /**
    * Crée un utilisateur.
    */
-  async create(data: Prisma.UserCreateInput): Promise<User> {
+  async create(data: Prisma.UserCreateInput) {
     return prisma.user.create({
       data,
     });
@@ -83,7 +84,7 @@ export class UserRepository {
   async update(
     id: string,
     data: Prisma.UserUpdateInput
-  ): Promise<User> {
+  ) {
     return prisma.user.update({
       where: {
         id,
@@ -95,7 +96,7 @@ export class UserRepository {
   /**
    * Supprime un utilisateur.
    */
-  async delete(id: string): Promise<User> {
+  async delete(id: string) {
     return prisma.user.delete({
       where: {
         id,

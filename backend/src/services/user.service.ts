@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
-import { Prisma, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import type { z } from "zod";
+import type { updateUserSchema } from "../validators/user.schema";
 
 import { UserRepository } from "../repositories/user.repository";
 import { AppError } from "../errors/app.error";
@@ -21,7 +23,7 @@ export class UserService {
   /**
    * Retourne un utilisateur par son identifiant.
    */
-  async getById(id: string): Promise<User> {
+  async getById(id: string) {
     const user = await this.repository.findById(id);
 
     if (!user) {
@@ -47,7 +49,7 @@ export class UserService {
   /**
    * Crée un utilisateur.
    */
-  async create(data: Prisma.UserCreateInput): Promise<User> {
+  async create(data: Prisma.UserCreateInput) {
     const existingUser = await this.repository.findByEmail(
       data.email
     );
@@ -75,17 +77,21 @@ export class UserService {
    */
   async update(
     id: string,
-    data: Prisma.UserUpdateInput
-  ): Promise<User> {
+    data: z.infer<typeof updateUserSchema>
+  ) {
     await this.getById(id);
 
-    return this.repository.update(id, data);
+    const update = { ...data };
+    if (update.password !== undefined) {
+      update.password = await bcrypt.hash(update.password, 10);
+    }
+    return this.repository.update(id, update);
   }
 
   /**
    * Supprime un utilisateur.
    */
-  async delete(id: string): Promise<User> {
+  async delete(id: string) {
     await this.getById(id);
 
     return this.repository.delete(id);

@@ -45,3 +45,9 @@ Thumbs.db
 # ==========================
 
 prisma/dev.db
+
+# Sorties de travail locales. Les preuves du rendu sont dans integration-continue/reports/.
+backend/.nyc_output/
+backend/.scannerwork/
+/run-reports/
+/backend-image.tar

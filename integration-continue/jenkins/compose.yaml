@@ -1,0 +1,51 @@
+name: souverainrecrut-ci
+
+services:
+  sonarqube:
+    image: sonarqube:26.10.0.133078-community
+    ports:
+      - "127.0.0.1:19000:9000"
+    volumes:
+      - sonar-data:/opt/sonarqube/data
+      - sonar-extensions:/opt/sonarqube/extensions
+
+  docker:
+    image: docker:29-dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - docker-data:/var/lib/docker
+      - docker-certs:/certs/client
+
+  jenkins:
+    build: .
+    depends_on:
+      - docker
+    ports:
+      - "127.0.0.1:18080:8080"
+    environment:
+      JAVA_OPTS: -Djenkins.install.runSetupWizard=false
+      CASC_JENKINS_CONFIG: /usr/share/jenkins/ref/casc.yaml
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_TLS_VERIFY: "1"
+      DOCKER_CERT_PATH: /certs/client
+    secrets:
+      - jenkins_password
+      - sonar_token
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - docker-certs:/certs/client:ro
+
+secrets:
+  jenkins_password:
+    file: .state/jenkins_password
+  sonar_token:
+    file: .state/sonar_token
+
+volumes:
+  docker-data:
+  docker-certs:
+  jenkins-data:
+  sonar-data:
+  sonar-extensions:

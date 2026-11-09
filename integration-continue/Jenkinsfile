@@ -1,0 +1,115 @@
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
+        timeout(time: 60, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    triggers { pollSCM('H/5 * * * *') }
+    environment {
+        IMAGE_REPOSITORY = 'brextiar/souverainrecrut-backend'
+    }
+    stages {
+        stage('Checkout Dev') {
+            steps {
+                deleteDir()
+                checkout scm
+                script {
+                    env.REVISION = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    env.IMAGE = "${env.IMAGE_REPOSITORY}:git-${env.REVISION}"
+                }
+                sh '''
+                    test "$REVISION" = "$(git rev-parse refs/remotes/origin/Dev)"
+                    mkdir -p run-reports
+                    echo "$REVISION" > run-reports/commit.txt
+                '''
+            }
+        }
+        stage('Dépendances et Prisma') {
+            steps {
+                dir('backend') {
+                    sh 'npm ci --no-audit && npm run prisma:generate && npm run build'
+                }
+            }
+        }
+        stage('Tests avec PostgreSQL') {
+            steps { sh 'sh integration-continue/test-postgres.sh' }
+            post {
+                always {
+                    junit 'backend/reports/junit.xml'
+                }
+            }
+        }
+        stage('Analyse SonarQube') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    dir('backend') {
+                        sh '''
+                            set +x
+                            SONAR_TOKEN="$SONAR_AUTH_TOKEN" sonar-scanner \
+                                -Dproject.settings=../integration-continue/sonar/sonar-project.properties \
+                                -Dsonar.scm.revision="$REVISION"
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    def gate = timeout(time: 10, unit: 'MINUTES') { waitForQualityGate() }
+                    withSonarQubeEnv('SonarQube') {
+                        sh 'node integration-continue/sonar/rapport.mjs'
+                    }
+                    if (gate.status != 'OK') { error("Quality Gate : ${gate.status}") }
+                }
+            }
+        }
+        stage('Image Backend') {
+            steps {
+                sh '''
+                    docker build --label "org.opencontainers.image.revision=$REVISION" \
+                        --label "org.opencontainers.image.source=https://github.com/Antoine-Ferron/souverainrecrut" \
+                        -t "$IMAGE" -f integration-continue/Dockerfile backend
+                '''
+            }
+        }
+        stage('Scan Trivy') {
+            steps {
+                sh '''
+                    set -eu
+                    trap 'rm -f backend-image.tar' EXIT
+                    docker image save -o backend-image.tar "$IMAGE"
+                    trivy image --timeout 30m --input backend-image.tar --scanners vuln --no-progress \
+                        --list-all-pkgs=false --format json --output run-reports/trivy.json
+                    trivy convert --format table --severity CRITICAL --exit-code 1 run-reports/trivy.json
+                '''
+            }
+        }
+        stage('Publication Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub',
+                        usernameVariable: 'HUB_USER', passwordVariable: 'HUB_TOKEN')]) {
+                    sh '''
+                        set +x
+                        set -eu
+                        test "$HUB_USER" = "${IMAGE_REPOSITORY%/*}"
+                        export DOCKER_CONFIG="$(mktemp -d)"
+                        trap 'rm -rf "$DOCKER_CONFIG"' EXIT
+                        printf '%s' "$HUB_TOKEN" | docker login --username "$HUB_USER" --password-stdin
+                        docker push "$IMAGE"
+                        docker image inspect --format '{{index .RepoDigests 0}}' "$IMAGE" > run-reports/image-digest.txt
+                        printf '%s\n' "$IMAGE" > run-reports/image-tag.txt
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'run-reports/*,backend/reports/junit.xml,backend/coverage/lcov.info',
+                allowEmptyArchive: true, fingerprint: true
+        }
+    }
+}
